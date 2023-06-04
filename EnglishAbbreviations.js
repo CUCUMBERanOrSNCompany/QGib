@@ -54,11 +54,13 @@ var englishAbbreviations = [
         ".P.S.",
         "ROFL",
         "SLAM",
-        "TBH",
+        "TBA",
         "TBD",
+        "TBH",
         "TBT",
         "TTYL",
         "VR",
+        "WTF",
         "WTH",
         "XR"
     ];

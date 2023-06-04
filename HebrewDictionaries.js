@@ -72,7 +72,9 @@ var englishToHebrewDict = {
     "Y":"ט",
     "Z":"ז",
     ",":"ת",
-    ".":"ץ"
+    ".":"ץ",
+    "'":",",
+    "/":"."
 }
 
 var hebrewToEnglishDict = {
@@ -104,5 +106,7 @@ var hebrewToEnglishDict = {
     "ז":"z",
     "ת":",",
     "ף":";",
-    "ץ":"."
+    "ץ":".",
+    ")":"(",
+    "(":")"
 }

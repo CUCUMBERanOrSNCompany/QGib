@@ -20,5 +20,28 @@
 
 function ConvertWordToEnglish(word)
 {
+    let outputWord = "";
 
+    for(let index = 0; index < word.length; index++)
+    {
+        if(!foreignToEnglishDictionaries.some(dictionary => dictionary.hasOwnProperty(word[index])))
+        {
+            outputWord += word[index];
+        }
+
+        else
+        {
+            for(let foreignDictionary of foreignToEnglishDictionaries)
+            {
+                if(foreignDictionary.hasOwnProperty(word[index]))
+                {
+                    outputWord += foreignDictionary[word[index]];
+
+                    break;
+                }
+            }
+        }
+    }
+
+    return outputWord
 }

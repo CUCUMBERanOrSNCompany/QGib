@@ -27,7 +27,10 @@ var allText;
 // The type of the text component: TextContent/Value/Something else
 var textType;
 
-var foreignToEnglishDictionaries = [];
+var foreignToEnglishDictionaries = [
+    arabicToEnglishDict,
+    hebrewToEnglishDict
+];
 
 
 Main();
@@ -45,10 +48,6 @@ function Main()
     let textToConvert = ConvertText();
 
     ReplaceText(textToConvert);
-
-
-
-
 }
 
 // This function checks if the text selected is in a text box of some sort
@@ -94,21 +93,6 @@ function GetAllTextAndType()
 // Converting the text from one language to another.
 function ConvertText()
 {
-    //todo:
-    // 1. Parse the text to words. Ensure that you consider \n as a word!
-    // 2. For each word determine if it's in English
-    // 3. If so, convert it to Hebrew/Arabic
-    // 4. If not, convert it to English
-    // 5. Append the output of 3/4 to an output text
-    // 6. Once all done, return it back to main for further treatment.
-
-    let demoText = "Hello,I'm Or.\n And  I love to program.very much!\nSincerely123.123 1";
-    let demoText2 = "Hello, \n I'm Or, And Welcome to Bar-Ilan University, Israel ! ";
-    let demoText3 = "The first few elements in Fibonacci series are: 0, 1, 1, 2, 3, 5,8, 13, etc..."
-
-    // var arrayOfWords = TextParser(demoText3);
-
-    // alert(arrayOfWords);
     var arrayOfWords = TextParser(selectedText);
 
     arrayOfWords = ClassifiesWords(arrayOfWords);
@@ -123,13 +107,15 @@ function ConvertText()
 // After converting, we want to apply basic writing rules. Therefore we will call the function with wasProcessed = true.
 function TextParser(text, wasProcessed = false)
 {
-    //
-    let output = "";
+    let output = [];
 
+    // The text was processed, hence it is safe to separate punctuation
+    // from the words and prepare them for post-processing
     if(wasProcessed)
     {
-        output = text.split(/(?<=\w)([ .?,!]+)/);
+        output = text.split(/([ !?,.]+)/).filter(Boolean);
     }
+    // The punctuation might be part of the word that needs to be converted.
     else
     {
         output = text.split(/(?<=\w)([ ]+)/);
@@ -167,6 +153,7 @@ function BasicTextCorrecting(arrayOfWords)
         arrayOfWords[index] = BasicCorrecter(arrayOfWords[index]);
     }
 
+    //alert(arrayOfWords);
     return arrayOfWords;
 }
 
@@ -183,34 +170,14 @@ function ArrayToStringConverter(arrayOfWords)
     return output;
 }
 
-function ConvertWordToEnglish(word)
-{
-
-}
-
 // Replacing the selected text of the customer with the output generated.
 function ReplaceText(inputText)
 {
     var textArea = document.activeElement;
 
-    let start;
+    let start = GetStart();
 
-    let finish;
-
-
-    if(textType == "textContent")
-    {
-        start = window.getSelection().anchorOffset;
-
-        finish = window.getSelection().focusOffset;
-    }
-
-    else
-    {
-        start = textArea.selectionStart;
-
-        finish = textArea.selectionEnd;
-    }
+    let finish = GetFinish();
 
     let allText = "";
 
@@ -244,6 +211,32 @@ function ReplaceText(inputText)
     {
         textArea.value = newText;
     }
+}
+
+// Return the start position of the selected text
+function GetStart()
+{
+    let textArea = document.activeElement;
+
+    if(textType === "textContent")
+    {
+        return window.getSelection().anchorOffset;
+    }
+
+    return textArea.selectionStart;
+}
+
+// Return the end position of the selected text
+function GetFinish()
+{
+    let textArea = document.activeElement;
+
+    if(textType === "textContent")
+    {
+        return window.getSelection().focusOffset;
+    }
+
+    return textArea.selectionEnd;
 }
 
 // Getting the address of the highlighted page.
