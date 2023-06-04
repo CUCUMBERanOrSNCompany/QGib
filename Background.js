@@ -26,7 +26,7 @@ chrome.action.onClicked.addListener((tab) => {
             'HebrewDictionaries.js',
             'ArabicDictionaries.js',
             'EnglishAbbreviations.js',
-            'EnglishRules.js',
+            'EnglishRulesPerWord.js',
             'BasicTextCheckers.js',
             'SpecialDomains.js',
             'ToHebrewConverter.js',

@@ -18,30 +18,38 @@
  * HelpDeskCucumber@Yahoo.Com
  *******************************************************/
 
-function ConvertWordToEnglish(word)
+// This script is running basic checks on English words
+function BasicEnglishEnforcerPerWord(word)
 {
-    let outputWord = "";
-
-    for(let index = 0; index < word.length; index++)
+    if(IsI(word))
     {
-        if(!foreignToEnglishDictionaries.some(dictionary => dictionary.hasOwnProperty(word[index])))
-        {
-            outputWord += word[index];
-        }
-
-        else
-        {
-            for(let foreignDictionary of foreignToEnglishDictionaries)
-            {
-                if(foreignDictionary.hasOwnProperty(word[index]))
-                {
-                    outputWord += foreignDictionary[word[index]];
-
-                    break;
-                }
-            }
-        }
+        return "I";
     }
 
-    return BasicEnglishEnforcerPerWord(outputWord);
+    if(IncludesMc(word))
+    {
+        return FormatAMc(word);
+    }
+
+    return word;
+}
+
+// Checks if the word is "i" or "I"
+function IsI(word)
+{
+    return (word === "i" || (word === "I"))
+}
+
+// Checks if the word starts with Mc
+function IncludesMc(word)
+{
+    return (word.length > 2 &&
+        (word[0] === "m" || word[0] === "M") &&
+        (word[1] === "c" || word[1] === "C"))
+}
+
+// Styles a word that starts with Mc correctly.
+function FormatAMc(word)
+{
+    return "Mc" + word[2].toUpperCase() + word.slice(3);
 }
