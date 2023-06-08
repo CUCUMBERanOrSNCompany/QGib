@@ -25,6 +25,7 @@ chrome.action.onClicked.addListener((tab) => {
     chrome.scripting.executeScript({
         target: {tabId: tab.id},
         files: [
+            'Scripts/Customer Preferences/LoaderFromLocalStorage.js',
             'Scripts/Dictionaries/HebrewDictionaries.js',
             'Scripts/Dictionaries/ArabicDictionaries.js',
             'Scripts/Language Rules/English/EnglishAbbreviations.js',
@@ -34,12 +35,14 @@ chrome.action.onClicked.addListener((tab) => {
             'Scripts/Converters/ToHebrewConverter.js',
             'Scripts/Converters/ToArabicConverter.js',
             'Scripts/Converters/ToEnglishConverter.js',
+            'Scripts/Converters/Converter.js',
             'Scripts/QGib Logic/Classifier.js',
             'Scripts/QGib Logic/QGibLogic.js'
         ]
     });
 });
 
+// Builds the Language selection menu.
 chrome.contextMenus.create({
     "id": "ParentForeignLanguageSelectorMenu",
     "title": "Change your foreign language...",
@@ -47,18 +50,35 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-    id: "englishToArabicDict",
+    id: "arabic",
     parentId: "ParentForeignLanguageSelectorMenu",
-    title: "Arabic",
+    title: "Arabic/العربية",
     contexts: ["all"]
 });
 
 chrome.contextMenus.create({
-    id: "englishToHebrewDict",
+    id: "hebrew",
     parentId: "ParentForeignLanguageSelectorMenu",
-    title: "Hebrew",
+    title: "Hebrew/עברית",
     contexts: ["all"]
 });
+
+// Listens to clicks on the foreign language selection menu and triggers a saving to local storage task.
+chrome.contextMenus.onClicked.addListener(function(info, tab)
+{
+    SaveForeignLanguagePreference(info.menuItemId);
+});
+
+// Saves the foreign language preference to local storage
+function SaveForeignLanguagePreference(selection)
+{
+    chrome.storage.local.set(
+        {
+            foreignLanguageSelection: selection
+        }
+    );
+}
+
 
 
 

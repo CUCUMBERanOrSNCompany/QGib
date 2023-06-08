@@ -21,51 +21,15 @@
  * HelpDeskCucumber@Yahoo.Com
  *******************************************************/
 
-var englishAbbreviations = [
-        "AFK",
-        "AR",
-        "ASAP",
-        "APSP",
-        "BF",
-        "BFS",
-        "BFF",
-        "BTW",
-        "BRB",
-        "DFS",
-        "DIY",
-        "ETA",
-        "FFS",
-        "FFT",
-        "FPS",
-        "FYI",
-        "FYR",
-        "GF",
-        "IDK",
-        "IDFK",
-        "IMHO",
-        "IMO",
-        "JK",
-        "LOL",
-        "NGL",
-        "NOOB",
-        "NSFW",
-        "OMFG",
-        "OMG",
-        "P.S.",
-        "PS",
-        "P.S",
-        ".PS",
-        ".P.S",
-        ".P.S.",
-        "ROFL",
-        "SLAM",
-        "TBA",
-        "TBD",
-        "TBH",
-        "TBT",
-        "TTYL",
-        "VR",
-        "WTF",
-        "WTH",
-        "XR"
-    ];
+//Keeps the language to which english text will be translated to.
+var foreignLanguagePreference;
+
+// Access the local storage and change the foreign language according to the customer's selection from the menu.
+function LoadForeignLanguagePreference(callback)
+{
+    chrome.storage.local.get(['foreignLanguageSelection'],
+        function(result)
+        {
+            foreignLanguagePreference = callback(result.foreignLanguageSelection || "englishToHebrewDict");
+        });
+}

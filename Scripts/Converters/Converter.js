@@ -21,51 +21,22 @@
  * HelpDeskCucumber@Yahoo.Com
  *******************************************************/
 
-var englishAbbreviations = [
-        "AFK",
-        "AR",
-        "ASAP",
-        "APSP",
-        "BF",
-        "BFS",
-        "BFF",
-        "BTW",
-        "BRB",
-        "DFS",
-        "DIY",
-        "ETA",
-        "FFS",
-        "FFT",
-        "FPS",
-        "FYI",
-        "FYR",
-        "GF",
-        "IDK",
-        "IDFK",
-        "IMHO",
-        "IMO",
-        "JK",
-        "LOL",
-        "NGL",
-        "NOOB",
-        "NSFW",
-        "OMFG",
-        "OMG",
-        "P.S.",
-        "PS",
-        "P.S",
-        ".PS",
-        ".P.S",
-        ".P.S.",
-        "ROFL",
-        "SLAM",
-        "TBA",
-        "TBD",
-        "TBH",
-        "TBT",
-        "TTYL",
-        "VR",
-        "WTF",
-        "WTH",
-        "XR"
-    ];
+
+// A dictionary that maps between foreign language preference and conversion function
+var foreignLanguagePreferenceToFunctionDict = {
+    "arabic": ConvertWordToArabic,
+    "hebrew": ConvertWordToHebrew
+};
+
+
+// Converting the provided word according to the provided classification ("ToForeign"/"ToEnglish")
+function WordConverter(word, classification)
+{
+    if(classification === "ToForeign")
+    {
+        return foreignLanguagePreferenceToFunctionDict[foreignLanguagePreference](word);
+    }
+
+    return ConvertWordToEnglish(word);
+
+}

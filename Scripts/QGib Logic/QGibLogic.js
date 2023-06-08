@@ -30,13 +30,19 @@ var allText;
 // The type of the text component: TextContent/Value/Something else
 var textType;
 
+// Contains the foreign dictionaries
 var foreignToEnglishDictionaries = [
     arabicToEnglishDict,
     hebrewToEnglishDict
 ];
 
+// Loading the selected foreign language using LoaderFromLocalStorage.js
+LoadForeignLanguagePreference(function (foreignLanguageSelection)
+{
+    foreignLanguagePreference = foreignLanguageSelection;
 
-Main();
+    Main();
+});
 
 function Main()
 {
@@ -98,7 +104,7 @@ function ConvertText()
 {
     var arrayOfWords = TextParser(selectedText);
 
-    arrayOfWords = ClassifiesWords(arrayOfWords);
+    arrayOfWords = ConvertingWords(arrayOfWords);
 
     arrayOfWords = BasicTextCorrecting(arrayOfWords);
 
@@ -127,21 +133,15 @@ function TextParser(text, wasProcessed = false)
     return output;
 }
 
-function ClassifiesWords(arrayOfWords)
+// Getting an array of words, and converting each word
+function ConvertingWords(arrayOfWords)
 {
     let output = "";
 
     for(let index = 0; index < arrayOfWords.length; index++)
     {
-        if(WordClassifier(arrayOfWords[index]) == "ToForeign")
-        {
-            //todo: Get the customer preference in regards to their preferred language.
-            output += ConvertWordToHebrew(arrayOfWords[index]);
-
-            continue;
-        }
-
-        output += ConvertWordToEnglish(arrayOfWords[index]);
+        output += WordConverter(word = arrayOfWords[index],
+            classification = WordClassifier(arrayOfWords[index]));
     }
 
     return TextParser(text = output, wasProcessed = true);
