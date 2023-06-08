@@ -14,16 +14,18 @@
     },
 
     "action": {
-        "default_title": "Convert text"
+        "default_title": "Cucumber's QGib - Text Converter"
     },
 
     "permissions": [
         "scripting",
-        "activeTab"
+        "activeTab",
+        "contextMenus",
+        "storage"
     ],
 
     "background": {
-        "service_worker":"Background.js"
+        "service_worker":"Scripts/Background.js"
     }
 
 
