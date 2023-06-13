@@ -1,4 +1,5 @@
 # QGib
+Download the extension here: https://chrome.google.com/webstore/detail/qgib/bnpjcjlgomhlmmefdhnlobnpiipjcbhf
 Dear visitor,
 
 Thank you for visiting QGib's repo. We've been waiting for you!
