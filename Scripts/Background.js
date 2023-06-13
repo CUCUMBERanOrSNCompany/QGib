@@ -63,9 +63,23 @@ chrome.contextMenus.create({
     contexts: ["all"]
 });
 
-// Listens to clicks on the foreign language selection menu and triggers a saving to local storage task.
+// Builds the Donate button
+chrome.contextMenus.create({
+    "id": "donateButton",
+    "title": "Donate to QGib",
+    "contexts": ["all"]
+});
+
+// Listens to clicks on the context menus and triggers relevant tasks.
 chrome.contextMenus.onClicked.addListener(function(info, tab)
 {
+    if (info.menuItemId === "donateButton")
+    {
+        chrome.tabs.create({ url: "https://paypal.me/CucumberByOrSN", active: true });
+
+        return;
+    }
+
     SaveForeignLanguagePreference(info.menuItemId);
 });
 
