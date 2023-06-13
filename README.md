@@ -1,5 +1,6 @@
 # QGib
-Download the extension here: https://chrome.google.com/webstore/detail/qgib/bnpjcjlgomhlmmefdhnlobnpiipjcbhf
+Download the extension here: 
+https://chrome.google.com/webstore/detail/qgib/bnpjcjlgomhlmmefdhnlobnpiipjcbhf
 
 Dear visitor,
 
