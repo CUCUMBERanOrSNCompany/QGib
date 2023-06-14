@@ -21,25 +21,47 @@
  * HelpDeskCucumber@Yahoo.Com
  *******************************************************/
 
+// Holds the paths in an orderly manner to all scripts needed for the logic
+var scriptsPaths = [
+    'Scripts/Customer Preferences/LoaderFromLocalStorage.js',
+    'Scripts/Dictionaries/HebrewDictionaries.js',
+    'Scripts/Dictionaries/ArabicDictionaries.js',
+    'Scripts/Language Rules/English/EnglishAbbreviations.js',
+    'Scripts/Language Rules/English/EnglishRulesPerWord.js',
+    'Scripts/Language Rules/General/BasicTextCheckers.js',
+    'Scripts/Websites Related/SpecialDomains.js',
+    'Scripts/Converters/ToHebrewConverter.js',
+    'Scripts/Converters/ToArabicConverter.js',
+    'Scripts/Converters/ToEnglishConverter.js',
+    'Scripts/Converters/Converter.js',
+    'Scripts/QGib Logic/Classifier.js',
+    'Scripts/QGib Logic/QGibLogic.js'
+];
+
+// Listens to left-click on QGib button
 chrome.action.onClicked.addListener((tab) => {
+    if (tab.url.startsWith('chrome://')) {
+        chrome.notifications.create({
+            type: 'basic',
+            iconUrl: 'Icons/Roadsign-no-entry.svg',
+            title: 'QGib blocked on this website',
+            message: 'QGib cannot be executed on a website without an address'
+        });
+
+        return;
+    }
+
     chrome.scripting.executeScript({
         target: {tabId: tab.id},
-        files: [
-            'Scripts/Customer Preferences/LoaderFromLocalStorage.js',
-            'Scripts/Dictionaries/HebrewDictionaries.js',
-            'Scripts/Dictionaries/ArabicDictionaries.js',
-            'Scripts/Language Rules/English/EnglishAbbreviations.js',
-            'Scripts/Language Rules/English/EnglishRulesPerWord.js',
-            'Scripts/Language Rules/General/BasicTextCheckers.js',
-            'Scripts/Websites Related/SpecialDomains.js',
-            'Scripts/Converters/ToHebrewConverter.js',
-            'Scripts/Converters/ToArabicConverter.js',
-            'Scripts/Converters/ToEnglishConverter.js',
-            'Scripts/Converters/Converter.js',
-            'Scripts/QGib Logic/Classifier.js',
-            'Scripts/QGib Logic/QGibLogic.js'
-        ]
+        files: scriptsPaths
     });
+});
+
+// Builds right-button option to convert the text
+chrome.contextMenus.create({
+    "id": "convertTextRightClick",
+    "title": "Convert highlighted text",
+    "contexts": ["all"]
 });
 
 // Builds the Language selection menu.
@@ -73,6 +95,27 @@ chrome.contextMenus.create({
 // Listens to clicks on the context menus and triggers relevant tasks.
 chrome.contextMenus.onClicked.addListener(function(info, tab)
 {
+    if(info.menuItemId === "convertTextRightClick")
+    {
+        if (tab.url.startsWith('chrome://')) {
+            chrome.notifications.create({
+                type: 'basic',
+                iconUrl: 'Icons/Roadsign-no-entry.svg',
+                title: 'QGib blocked on this website',
+                message: 'QGib cannot be executed on a website without an address'
+            });
+
+            return;
+        }
+
+        chrome.scripting.executeScript({
+            target: {tabId: tab.id},
+            files: scriptsPaths
+        });
+
+        return;
+    }
+
     if (info.menuItemId === "donateButton")
     {
         chrome.tabs.create({ url: "https://paypal.me/CucumberByOrSN", active: true });
@@ -92,7 +135,3 @@ function SaveForeignLanguagePreference(selection)
         }
     );
 }
-
-
-
-
