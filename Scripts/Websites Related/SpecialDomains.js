@@ -31,10 +31,12 @@ var domainsList = [
   /^https?:\/\/(?:www\.)?instagram\.com\/.*/,
   /^https?:\/\/(?:www\.)?web\.whatsapp\.com\/.*/,
   /^https?:\/\/(?:www\.)?web\.telegram\.org\/.*/,
-  /^https?:\/\/(?:www\.)?chat\.openai\.com\/.*/
-
+  /^https?:\/\/(?:www\.)?chat\.openai\.com\/.*/,
+  /^https?:\/\/(?:www\.)?google\.com\/search.*/,
+  /^https?:\/\/(?:www\.)?linkedin\.com\/messaging.*/
 ];
 
+/// Checking if the domain is special.
 function IsDomainSpecial(url)
 {
   for(let index = 0; index < domainsList.length; index++)
@@ -45,7 +47,7 @@ function IsDomainSpecial(url)
     }
   }
 
-  return false
+  return false;
 }
 
 function Testing()

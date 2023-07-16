@@ -77,7 +77,8 @@ var englishToHebrewDict = {
     ",":"ת",
     ".":"ץ",
     "'":",",
-    "/":"."
+    "/":".",
+    ";":"ף"
 }
 
 var hebrewToEnglishDict = {

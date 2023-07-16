@@ -61,7 +61,7 @@ function Main()
 
 // This function checks if the text selected is in a text box of some sort
 // and not in an area at the website that the reader cannot modify.
-function CheckIfTextIsEditable()
+function  CheckIfTextIsEditable()
 {
     if(!selectedText.toString().trim()) {
         // there is no selection
@@ -97,12 +97,14 @@ function GetAllTextAndType()
 
         textType = "value";
     }
+
+    allText.toString().trim();
 }
 
 // Converting the text from one language to another.
 function ConvertText()
 {
-    var arrayOfWords = TextParser(selectedText);
+    var arrayOfWords = TextParser(selectedText.trim());
 
     arrayOfWords = ConvertingWords(arrayOfWords);
 
@@ -194,13 +196,14 @@ function ReplaceText(inputText)
         allText = textArea.value.toString();
     }
 
-    var newText = allText.substring(0, start) + inputText + allText.substring(finish, allText.length);
+    let newText = (allText.substring(0, start)
+        + inputText + allText.substring(finish, allText.length)).toString().trim();
 
     let SpecialDomainChecker = IsDomainSpecial(DomainGetter());
 
     if(SpecialDomainChecker)
     {
-        CopyTextToClipBoard(newText);
+        CopyTextToClipBoard(inputText);
 
         return;
     }

@@ -57,45 +57,81 @@ chrome.action.onClicked.addListener((tab) => {
     });
 });
 
-// Builds right-button option to convert the text
+// Define the IDs of the context menu items
+const convertTextMenuItemId = "convertTextRightClick";
+const languageSelectorMenuItemId = "ParentForeignLanguageSelectorMenu";
+const donateButtonMenuItemId = "donateButton";
+
+/// Creating the context menu items if they don't exist
+
+/// Creating right-click conversion option
 chrome.contextMenus.create({
-    "id": "convertTextRightClick",
+    "id": convertTextMenuItemId,
     "title": "Convert highlighted text",
     "contexts": ["all"]
+}, function() {
+    if (chrome.runtime.lastError) {
+        // Error occurred while creating the context menu item
+        console.error(chrome.runtime.lastError);
+    }
 });
 
-// Builds the Language selection menu.
+/// Creating foreign language selection menu
 chrome.contextMenus.create({
-    "id": "ParentForeignLanguageSelectorMenu",
+    "id": languageSelectorMenuItemId,
     "title": "Change your foreign language...",
     "contexts": ["all"]
+}, function() {
+    if (chrome.runtime.lastError) {
+        // Error occurred while creating the context menu item
+        console.error(chrome.runtime.lastError);
+    } else {
+        // Create the sub-menu items under the language selector menu
+        chrome.contextMenus.create({
+            "id": "arabic",
+            "parentId": languageSelectorMenuItemId,
+            "title": "Arabic/العربية",
+            "contexts": ["all"]
+        });
+
+        chrome.contextMenus.create({
+            "id": "hebrew",
+            "parentId": languageSelectorMenuItemId,
+            "title": "Hebrew/עברית",
+            "contexts": ["all"]
+        });
+    }
 });
 
+/// Creating a donate button context menu
 chrome.contextMenus.create({
-    id: "arabic",
-    parentId: "ParentForeignLanguageSelectorMenu",
-    title: "Arabic/العربية",
-    contexts: ["all"]
-});
-
-chrome.contextMenus.create({
-    id: "hebrew",
-    parentId: "ParentForeignLanguageSelectorMenu",
-    title: "Hebrew/עברית",
-    contexts: ["all"]
-});
-
-// Builds the Donate button
-chrome.contextMenus.create({
-    "id": "donateButton",
+    "id": donateButtonMenuItemId,
     "title": "Donate to QGib",
     "contexts": ["all"]
+}, function() {
+    if (chrome.runtime.lastError) {
+        // Error occurred while creating the context menu item
+        console.error(chrome.runtime.lastError);
+    }
+});
+
+// Update the context menu items if they already exist
+chrome.contextMenus.update(convertTextMenuItemId, {
+    "title": "Convert highlighted text"
+});
+
+chrome.contextMenus.update(languageSelectorMenuItemId, {
+    "title": "Change your foreign language..."
+});
+
+chrome.contextMenus.update(donateButtonMenuItemId, {
+    "title": "Donate to QGib"
 });
 
 // Listens to clicks on the context menus and triggers relevant tasks.
 chrome.contextMenus.onClicked.addListener(function(info, tab)
 {
-    if(info.menuItemId === "convertTextRightClick")
+    if(info.menuItemId === convertTextMenuItemId)
     {
         if (tab.url.startsWith('chrome://')) {
             chrome.notifications.create({
@@ -116,7 +152,7 @@ chrome.contextMenus.onClicked.addListener(function(info, tab)
         return;
     }
 
-    if (info.menuItemId === "donateButton")
+    if (info.menuItemId === donateButtonMenuItemId)
     {
         chrome.tabs.create({ url: "https://paypal.me/CucumberByOrSN", active: true });
 

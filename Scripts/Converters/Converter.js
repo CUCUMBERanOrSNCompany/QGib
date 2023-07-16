@@ -34,11 +34,6 @@ function WordConverter(word, classification)
 {
     if(classification === "ToForeign")
     {
-        if(!(foreignLanguagePreference in foreignLanguagePreferenceToFunctionDict))
-        {
-            foreignLanguagePreference = "hebrew";
-        }
-
         return foreignLanguagePreferenceToFunctionDict[foreignLanguagePreference](word);
     }
 

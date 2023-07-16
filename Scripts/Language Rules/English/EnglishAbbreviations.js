@@ -23,7 +23,6 @@
 
 var englishAbbreviations = [
         "AFK",
-        "AKA",
         "AR",
         "ASAP",
         "APSP",
@@ -46,8 +45,6 @@ var englishAbbreviations = [
         "IMHO",
         "IMO",
         "JK",
-        "LMAO",
-        "LMFAO",
         "LOL",
         "NGL",
         "NOOB",
@@ -64,10 +61,8 @@ var englishAbbreviations = [
         "SLAM",
         "TBA",
         "TBD",
-        "TBF",
         "TBH",
         "TBT",
-        "TF",
         "TTYL",
         "VR",
         "WTF",
